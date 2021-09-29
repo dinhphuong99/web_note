@@ -4,26 +4,26 @@ import java.sql.Date;
 
 public class Notes {
     private int id;
-    private String eventName;
-    private Date startTime;
-    private Date endTime;
-    private Short priority;
+    private String noteName;
+    private String startTime;
+    private String endTime;
     private String description;
     private int typeId;
+    private int priorityId;
 
     public Notes() {
     }
 
-    public Notes(int id, String eventName,
-                 Date startTime, Date endTime,
-                 Short priority, String description, int typeId) {
+    public Notes(int id, String noteName,
+                 String startTime, String endTime,
+                 String description, int typeId, int priorityId) {
         this.id = id;
-        this.eventName = eventName;
+        this.noteName = noteName;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.priority = priority;
         this.description = description;
         this.typeId = typeId;
+        this.priorityId = priorityId;
     }
 
     public int getId() {
@@ -34,36 +34,28 @@ public class Notes {
         this.id = id;
     }
 
-    public String getEventName() {
-        return eventName;
+    public String getNoteName() {
+        return noteName;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setNoteName(String noteName) {
+        this.noteName = noteName;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
-    }
-
-    public Short getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Short priority) {
-        this.priority = priority;
     }
 
     public String getDescription() {
@@ -80,5 +72,13 @@ public class Notes {
 
     public void setTypeId(int typeId) {
         this.typeId = typeId;
+    }
+
+    public int getPriorityId() {
+        return priorityId;
+    }
+
+    public void setPriorityId(int priorityId) {
+        this.priorityId = priorityId;
     }
 }

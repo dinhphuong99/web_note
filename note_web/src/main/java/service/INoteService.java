@@ -1,6 +1,6 @@
 package service;
 
-import model.NoteType;
+import model.NoteTypes;
 import model.Notes;
 
 import java.sql.SQLException;
@@ -17,23 +17,4 @@ public interface INoteService {
     public boolean deleteNote(int id) throws SQLException;
 
     public boolean updateNote(Notes note) throws SQLException;
-
-    public boolean findNotes(Notes note) throws SQLException;
-
-    public List<Notes> findNoteWithName (int id, String nameNote) throws SQLException;
-
-    //
-    public void insertNoteType (NoteType noteType) throws SQLException;
-
-    public NoteType selectNoteType(int id) throws SQLException;
-
-    public List<NoteType>selectAllNoteType() throws SQLException;
-
-    public boolean deleteNoteType(int id) throws SQLException;
-
-    public boolean updateNoteType(NoteType noteType) throws SQLException;
-
-    public boolean findNoteType(Notes note) throws SQLException;
-
-    public List<Notes> findNoteTypeWithName (int id, String name) throws SQLException;
 }
