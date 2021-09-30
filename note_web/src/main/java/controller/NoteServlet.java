@@ -74,7 +74,7 @@ public class NoteServlet extends HttpServlet {
     private void listNote(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
         List<Notes> listNote = noteService.selectAllNotes();
         req.setAttribute("listNote", listNote);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("note/list.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("admin/adminHome.jsp");
         dispatcher.forward(req, resp);
     }
 

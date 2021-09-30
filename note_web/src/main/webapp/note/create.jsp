@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Create new note</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
@@ -13,17 +13,17 @@
                 <div class="col-sm-6">
                     <h1>Create customer</h1>
                     <h3>
-                        <a href="/customers"> Black list Customer</a>
+                        <a href="/notes"> Back list note</a>
                     </h3>
                 </div>
             </div>
         </div>
     </div>
-    <form id="frmCreateCustomer" method="post">
+    <form id="frmCreateNote" method="post">
         <fieldset class="row g-3">
             <div class="col-md-6">
-                <label class="form-label">Name</label>
-                <input type="text" class="form-control" name="name">
+                <label class="form-label">Note Name</label>
+                <input type="text" class="form-control" name="note_name">
             </div>
             <div class="col-md-6">
                 <label class="form-label">Email</label>
@@ -40,7 +40,7 @@
             <div class="col-md-12">
                 <button type="submit" id="btnCreateCustomer" class="btn btn-outline-primary">
                     <i class="fa fa-plus" aria-hidden="true"></i>
-                    Create customer
+                    Create notes
                 </button>
             </div>
         </fieldset>
