@@ -1,8 +1,11 @@
 package controller;
 
 import model.NoteTypes;
+import model.Priority;
 import service.INoteTypeSevice;
+import service.IPriorityService;
 import service.NoteTypeService;
+import service.PriorityService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -11,13 +14,13 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "NoteTypeServlet", value = "/noteTypes")
-public class NoteTypeServlet extends HttpServlet {
+@WebServlet(name = "PriorityServlet", value = "/PriorityServlet")
+public class PriorityServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private INoteTypeSevice noteTypeService;
+    private IPriorityService priorityService;
 
     public void init() {
-        noteTypeService = new NoteTypeService();
+        priorityService = new PriorityService();
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,13 +32,13 @@ public class NoteTypeServlet extends HttpServlet {
         try {
             switch (action) {
                 case "create":
-                    insertNoteType(req, resp);
+                    insertPriority(req, resp);
                     break;
                 case "edit":
-                    updateNoteType(req, resp);
+                    updatePriority(req, resp);
                     break;
                 case "delete" :
-                    deleteNoteType(req,resp);
+                    deletePriority(req,resp);
                     break;
             }
         } catch (SQLException ex) {
@@ -63,7 +66,7 @@ public class NoteTypeServlet extends HttpServlet {
                     formDeleteTypes(resp, req);
                     break;
                 default:
-                    listNoteTypes(req, resp);
+                    listPriority(req, resp);
                     break;
             }
         } catch (SQLException ex) {
@@ -71,23 +74,24 @@ public class NoteTypeServlet extends HttpServlet {
         }
     }
 
-    private void listNoteTypes(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
-        List<NoteTypes> listNoteTypes = noteTypeService.selectAllNoteTypes();
-        req.setAttribute("listNoteType", listNoteTypes);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("noteType/list.jsp");
+    private void listPriority(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
+        List<Priority> listPriority = priorityService.selectAllPriority();
+        req.setAttribute("listPriority", listPriority);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("priority/list.jsp");
         dispatcher.forward(req, resp);
     }
 
     public void formDeleteTypes(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException, SQLException {
         int id = Integer.parseInt(request.getParameter("id"));
-        request.setAttribute("noteType",noteTypeService.selectNoteType(id));
-        RequestDispatcher dis = request.getRequestDispatcher("noteType/delete.jsp");
+        request.setAttribute("priority",priorityService.selectPriority(id));
+        RequestDispatcher dis = request.getRequestDispatcher("priority/delete.jsp");
         dis.forward(request,response);
     }
 
-    private void deleteNoteType(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
+    private void deletePriority(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
         int id =Integer.parseInt(req.getParameter("id"));
-        boolean isDeposit = noteTypeService.deleteNoteTypes(id);
+        priorityService.deletePriority(id);
+        boolean isDeposit = priorityService.deletePriority(id);
 
         if (isDeposit) {
             req.setAttribute("success","Successful delete");
@@ -96,15 +100,15 @@ public class NoteTypeServlet extends HttpServlet {
             req.setAttribute("success",null);
             req.setAttribute("error","Error delete");
         }
-        resp.sendRedirect("/noteTypes");
+        resp.sendRedirect("/priority");
     }
 
     private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException{
         int id = Integer.parseInt(req.getParameter("id"));
-        NoteTypes existingNotesTypes = noteTypeService.selectNoteType(id);
-        if (existingNotesTypes != null) {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("noteType/edit.jsp");
-            req.setAttribute("noteTypes", existingNotesTypes);
+        Priority existingPriority = priorityService.selectPriority(id);
+        if (existingPriority != null) {
+            RequestDispatcher dispatcher = req.getRequestDispatcher("priority/edit.jsp");
+            req.setAttribute("priority", existingPriority);
             dispatcher.forward(req, resp);
 
         } else {
@@ -115,36 +119,36 @@ public class NoteTypeServlet extends HttpServlet {
     }
 
     private void showNewForm(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException{
-        RequestDispatcher dispatcher = req.getRequestDispatcher("noteType/create.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("priority/create.jsp");
         dispatcher.forward(req, resp);
     }
 
 
-    private void insertNoteType(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
-        String name = req.getParameter("name");
+    private void insertPriority(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
+        String name = req.getParameter("priority_name");
 
         if(name.equals("")){
-            RequestDispatcher dispatcher = req.getRequestDispatcher("noteType/create.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("priority/create.jsp");
             req.setAttribute("error","Invalid Value");
             req.setAttribute("success",null);
             dispatcher.forward(req,resp);
 
         }else{
-            NoteTypes newNoteType = new NoteTypes();
-            newNoteType.setName(name);
-            noteTypeService.insertNoteType(newNoteType);
+            Priority newPriority = new Priority();
+            newPriority.setPriorityName(name);
+            priorityService.insertPriority(newPriority);
             req.setAttribute("error",null);
             req.setAttribute("success","Create Note Type successfully");
             showNewForm(req, resp);
         }
     }
 
-    private void updateNoteType(HttpServletRequest req, HttpServletResponse resp)
+    private void updatePriority(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
         int id = Integer.parseInt(req.getParameter("id"));
-        String name = req.getParameter("note_name");
-        NoteTypes note = new NoteTypes(id, name);
-        boolean isDeposit = noteTypeService.updateNoteTypes(note);
+        String name = req.getParameter("priority_name");
+        Priority priority = new Priority(id, name);
+        boolean isDeposit = priorityService.updatePriority(priority);
 
         if (isDeposit) {
             req.setAttribute("success","Successful edit");

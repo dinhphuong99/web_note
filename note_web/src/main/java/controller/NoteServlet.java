@@ -1,5 +1,6 @@
 package controller;
 
+import model.Notes;
 import service.INoteService;
 import service.NoteService;
 
@@ -28,13 +29,13 @@ public class NoteServlet extends HttpServlet {
         try {
             switch (action) {
                 case "create":
-                    insertCustomers(req, resp);
+                    insertNote(req, resp);
                     break;
                 case "edit":
-                    updateCustomers(req, resp);
+                    updateNote(req, resp);
                     break;
                 case "delete" :
-                    deleteCustomers(req,resp);
+                    deleteNote(req,resp);
                     break;
             }
         } catch (SQLException ex) {
@@ -59,10 +60,10 @@ public class NoteServlet extends HttpServlet {
                     showEditForm(req, resp);
                     break;
                 case "delete":
-                    formdeleteCustomers(resp, req);
+                    formDeleteNotes(resp, req);
                     break;
                 default:
-                    listCustomer(req, resp);
+                    listNote(req, resp);
                     break;
             }
         } catch (SQLException ex) {
@@ -71,81 +72,102 @@ public class NoteServlet extends HttpServlet {
     }
 
     private void listNote(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
-        List<Customer> listCustomer = customerService.selectAllCustomers();
-        req.setAttribute("listCustomer", listCustomer);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("customer/list.jsp");
+        List<Notes> listNote = noteService.selectAllNotes();
+        req.setAttribute("listNote", listNote);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("note/list.jsp");
         dispatcher.forward(req, resp);
     }
 
-    public void formdeleteCustomers(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException, SQLException {
+    public void formDeleteNotes(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException, SQLException {
         int id = Integer.parseInt(request.getParameter("id"));
-        request.setAttribute("customer",customerService.selectCustomer(id));
-        RequestDispatcher dis = request.getRequestDispatcher("customer/delete.jsp");
+        request.setAttribute("note",noteService.selectNote(id));
+        RequestDispatcher dis = request.getRequestDispatcher("note/delete.jsp");
         dis.forward(request,response);
     }
 
-    private void deleteCustomers(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
+    private void deleteNote(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
         int id =Integer.parseInt(req.getParameter("id"));
+        noteService.deleteNote(id);
+        boolean isDeposit = noteService.deleteNote(id);
 
-        customerService.deleteCustomer(id);
-        resp.sendRedirect("/customers");
-
+        if (isDeposit) {
+            req.setAttribute("success","Successful delete");
+            req.setAttribute("error",null);
+        } else {
+            req.setAttribute("success",null);
+            req.setAttribute("error","Error delete");
+        }
+        resp.sendRedirect("/notes");
     }
 
     private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException{
         int id = Integer.parseInt(req.getParameter("id"));
-        Customer existingCustomer = customerService.selectCustomer(id);
+        Notes existingCustomer = noteService.selectNote(id);
         if (existingCustomer != null) {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("customer/edit.jsp");
-            req.setAttribute("customer", existingCustomer);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("note/edit.jsp");
+            req.setAttribute("note", existingCustomer);
             dispatcher.forward(req, resp);
 
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("customer/404.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("note/404.jsp");
             dispatcher.forward(req, resp);
         }
 
     }
 
     private void showNewForm(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException{
-        RequestDispatcher dispatcher = req.getRequestDispatcher("customer/create.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("note/create.jsp");
         dispatcher.forward(req, resp);
     }
 
 
-    private void insertCustomers(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
-        String name = req.getParameter("name");
-        String email = req.getParameter("email");
-        String phone = req.getParameter("phone");
-        String address = req.getParameter("address");
-        if(name == "" || email == "" || phone == "" || address == ""){
+    private void insertNote(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
+        String name = req.getParameter("note_name");
+        String startTime = req.getParameter("start_time");
+        String endTime = req.getParameter("end_Time");
+        String description = req.getParameter("description");
+        int typeId = Integer.parseInt(req.getParameter("type_id"));
+        int priorityId = Integer.parseInt(req.getParameter("priority_id"));
+
+        if(name.equals("") || startTime.equals("") || endTime.equals("") || description.equals("") || String.valueOf(typeId).equals("")||String.valueOf(priorityId).equals("")){
             RequestDispatcher dispatcher = req.getRequestDispatcher("customer/create.jsp");
             req.setAttribute("error","Invalid Value");
             req.setAttribute("success",null);
             dispatcher.forward(req,resp);
 
         }else{
-            Customer newCustomer = new Customer(name, email, phone, address);
-            customerService.insertCustomer(newCustomer);
+            Notes newNote = new Notes();
+            newNote.setNoteName(name);
+            newNote.setStartTime(startTime);
+            newNote.setEndTime(endTime);
+            newNote.setDescription(description);
+            newNote.setTypeId(typeId);
+            newNote.setPriorityId(priorityId);
+            noteService.insertNote(newNote);
             req.setAttribute("error",null);
             req.setAttribute("success","Create Customer successfully");
             showNewForm(req, resp);
         }
-
     }
 
-    private void updateCustomers(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
+    private void updateNote(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
         int id = Integer.parseInt(req.getParameter("id"));
-        String name = req.getParameter("name");
-        String email = req.getParameter("email");
-        String phone = req.getParameter("phone");
-        String address = req.getParameter("address");
-        Customer customer = new Customer(id, name, email, phone, address);
-        customer.setBalance(new Double(0));
-        customerService.updateCustomer(customer);
+        String name = req.getParameter("note_name");
+        String startTime = req.getParameter("start_time");
+        String endTime = req.getParameter("end_Time");
+        String description = req.getParameter("description");
+        int typeId = Integer.parseInt(req.getParameter("type_id"));
+        int priorityId = Integer.parseInt(req.getParameter("priority_id"));
+        Notes note = new Notes(id, name, startTime, endTime, description,typeId,priorityId);
+        boolean isDeposit = noteService.updateNote(note);
 
+        if (isDeposit) {
+            req.setAttribute("success","Successful deposit");
+            req.setAttribute("error",null);
+        } else {
+            req.setAttribute("success",null);
+            req.setAttribute("error","Error deposit");
+        }
         showEditForm(req, resp);
     }
-
-
 }

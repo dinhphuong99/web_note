@@ -55,13 +55,6 @@ public class NoteService implements INoteService {
     @Override
     public Notes selectNote(int id) throws SQLException {
         Notes note = null;
-        //    `id` int NOT NULL AUTO_INCREMENT,
-//  `note_name` varchar(45) NOT NULL,
-//  `start_time` datetime DEFAULT NULL,
-//            `end_time` datetime DEFAULT NULL,
-//            `description` text,
-//            `type_id` int NOT NULL,
-//            `priority_id` int NOT NULL,
         try (Connection connection = connection(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_NOTE_BY_ID);) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
