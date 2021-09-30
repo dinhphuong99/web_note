@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface INoteTypeSevice {
-    public void insertNoteType (NoteTypes noteTypes) throws SQLException;
+    public boolean insertNoteType (NoteTypes noteTypes) throws SQLException;
 
     public NoteTypes selectNoteType(int id) throws SQLException;
 

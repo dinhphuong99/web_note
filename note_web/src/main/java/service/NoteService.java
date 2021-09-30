@@ -29,12 +29,13 @@ public class NoteService implements INoteService {
 
     String INSERT_NOTE_SQL = "INSERT INTO notes" + "(note_name, start_time, end_time, description, type_id, priority_id)VALUES" + "(?, ?, ?, ?, ?, ?);";
     String SELECT_ALL_NOTE_SQL = "SELECT * FROM notes";
-    String SELECT_NOTE_BY_ID = "SELECT note_name, start_time, end_time, description, type_id, priority_id FROM customers WHERE id = ?";
+    String SELECT_NOTE_BY_ID = "SELECT note_name, start_time, end_time, description, type_id, priority_id FROM notes WHERE id = ?";
     String DELETE_NOTE_SQL = "DELETE FROM notes WHERE id = ?;";
-    String UPDATE_NOTE_SQL = "UPDATE customers SET note_name = ?, start_time = ?, end_time = ?, description = ?, type_id = ?, priority_id = ? WHERE id = ?;";
+    String UPDATE_NOTE_SQL = "UPDATE notes SET note_name = ?, start_time = ?, end_time = ?, description = ?, type_id = ?, priority_id = ? WHERE id = ?;";
 
     @Override
-    public void insertNote(Notes note) throws SQLException {
+    public boolean insertNote(Notes note) throws SQLException {
+        boolean insert = false;
         try (Connection connection = connection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NOTE_SQL)) {
             preparedStatement.setString(1, note.getNoteName());
             preparedStatement.setString(2, note.getStartTime());
@@ -42,10 +43,12 @@ public class NoteService implements INoteService {
             preparedStatement.setString(4, note.getDescription());
             preparedStatement.setInt(5, note.getTypeId());
             preparedStatement.setInt(6, note.getPriorityId());
-            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
+            insert = true;
+            return insert;
         } catch (SQLException e) {
             printSQLException(e);
+            return insert;
         }
     }
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface INoteService {
-    public void insertNote (Notes note) throws SQLException;
+    public boolean insertNote (Notes note) throws SQLException;
 
     public Notes selectNote(int id) throws SQLException;
 

@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IPriorityService {
-    public void insertNoteType (Priority noteTypes) throws SQLException;
+    public boolean insertPriority (Priority priority) throws SQLException;
 
-    public Priority selectNoteType(int id) throws SQLException;
+    public Priority selectPriority(int id) throws SQLException;
 
-    public List<Priority> selectAllNoteTypes() throws SQLException;
+    public List<Priority> selectAllPriority() throws SQLException;
 
-    public boolean deleteNoteTypes(int id) throws SQLException;
+    public boolean deletePriority(int id) throws SQLException;
 
-    public boolean updateNoteTypes(Priority noteTypes) throws SQLException;
+    public boolean updatePriority(Priority priority) throws SQLException;
 }
