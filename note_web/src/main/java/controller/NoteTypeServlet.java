@@ -72,8 +72,8 @@ public class NoteTypeServlet extends HttpServlet {
     }
 
     private void listNoteTypes(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
-        List<NoteTypes> listNoteTypes = noteTypeService.selectAllNoteTypes();
-        req.setAttribute("listNoteType", listNoteTypes);
+        List<NoteTypes> listNoteType = noteTypeService.selectAllNoteTypes();
+        req.setAttribute("listNoteType", listNoteType);
         RequestDispatcher dispatcher = req.getRequestDispatcher("noteType/list.jsp");
         dispatcher.forward(req, resp);
     }
