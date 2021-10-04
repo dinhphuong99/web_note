@@ -22,44 +22,22 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/resource/js/jquery.validate.min.js"></script>
 </head>
-<title>Title</title>
+<title>Edit Note Type</title>
 </head>
 <body class="container" >
 <div align="center">
     <caption><h2>Edit Customers</h2></caption>
     <p>
-        <a href="/customers">Back to customer list</a>
+        <a href="/noteTypes">Back to noteType list</a>
     </p>
     <form class="form-group needs-validation"  method="post">
         <div class="row">
             <div class="col-6">
-                <label >User Name: </label>
+                <label >Name: </label>
                 <input  type="text" name="name" size="45" class="form-control"
-                        value="<c:out value='${customer.getName()}'/>" >
-            </div>
-            <div class="col-md-6">
-                <label>Email:</label>
-                <input type="text" name="email" id="email" size="45" class="form-control"
-                       value="<c:out value='${customer.getEmail()}'/>">
+                        value="<c:out value='${noteTypes.getName()}'/>" >
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Phone:</label>
-                <input type="text" name="phone" id="phone" size="45" class="form-control"
-                       value="<c:out value='${customer.getPhone()}'/>">
-            </div>
-            <div class="col-md-6">
-                <label>Address:</label>
-                <input type="text" name="address" id="address" size="45" class="form-control"
-                       value="<c:out value='${customer.getAddress()}'/>">
-            </div>
-            <div class="col-md-6">
-                <label>Balance:</label>
-                <input type="text" name="balance" class="form-control" readonly
-                       value="<c:out value='${customer.getBalance()}'/>">
-            </div>
-        </div><br>
         <div class="form-group">
             <button type="submit" class="btn btn-warning">Update</button>
         </div>

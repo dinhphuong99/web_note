@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'/>
     <style>
-        label.error{
+        label.error {
             color: red;
         }
     </style>
@@ -22,44 +22,54 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/resource/js/jquery.validate.min.js"></script>
 </head>
-<title>Title</title>
+<title>Edit note</title>
 </head>
-<body class="container" >
+<body class="container">
 <div align="center">
-    <caption><h2>Edit Customers</h2></caption>
     <p>
-        <a href="/customers">Back to customer list</a>
+        <a href="/notes">Back to note list</a>
     </p>
-    <form class="form-group needs-validation"  method="post">
+    <form class="form-group needs-validation" method="post">
         <div class="row">
             <div class="col-6">
-                <label >User Name: </label>
-                <input  type="text" name="name" size="45" class="form-control"
-                        value="<c:out value='${customer.getName()}'/>" >
+                <label>Note Name: </label>
+                <input type="text" name="note_name" size="45" class="form-control"
+                       value="<c:out value='${note.getNoteName()}'/>">
             </div>
             <div class="col-md-6">
-                <label>Email:</label>
-                <input type="text" name="email" id="email" size="45" class="form-control"
-                       value="<c:out value='${customer.getEmail()}'/>">
+                <label>Start Time:</label>
+                <input type="text" name="email" id="start_time" size="45" class="form-control"
+                       value="<c:out value='${note.getStartTime()}'/>">
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <label>Phone:</label>
-                <input type="text" name="phone" id="phone" size="45" class="form-control"
-                       value="<c:out value='${customer.getPhone()}'/>">
+                <label>End Time:</label>
+                <input type="text" name="email" id="end_time" size="45" class="form-control"
+                       value="<c:out value='${note.getEndTime()}'/>">
             </div>
             <div class="col-md-6">
-                <label>Address:</label>
+                <label>Description:</label>
                 <input type="text" name="address" id="address" size="45" class="form-control"
-                       value="<c:out value='${customer.getAddress()}'/>">
+                       value="<c:out value='${note.getDescription()}'/>">
             </div>
             <div class="col-md-6">
-                <label>Balance:</label>
-                <input type="text" name="balance" class="form-control" readonly
-                       value="<c:out value='${customer.getBalance()}'/>">
+                <label>Type:</label>
+                <select name="type_id" id="type_id">
+                    <c:forEach items="${noteTypesList}" var="item">
+                        <option value="${item.id}">${item.name}</option>
+                    </c:forEach>
+                </select>
+
+                <label>Priority:</label>
+                <select name="priority_id" id="priority_id">
+                    <c:forEach items="${notePriority}" var="item1">
+                        <option value="${item1.id}">${item1.priorityName}</option>
+                    </c:forEach>
+                </select>
             </div>
-        </div><br>
+        </div>
+        <br>
         <div class="form-group">
             <button type="submit" class="btn btn-warning">Update</button>
         </div>
@@ -84,7 +94,7 @@
 <script>
     $(".alert-success").fadeOut(4000);
     $(".alert-danger").fadeIn();
-    $(".close").click(function(){
+    $(".close").click(function () {
         $(".alert-danger").fadeOut();
     })
 </script>

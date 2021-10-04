@@ -49,7 +49,7 @@ public class PriorityService implements IPriorityService{
     @Override
     public Priority selectPriority(int id) throws SQLException {
         Priority priority = null;
-        try (Connection connection = connection(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRIORITY_SQL);) {
+        try (Connection connection = connection(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRIORITY_BY_ID);) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 

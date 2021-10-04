@@ -7,36 +7,40 @@
 <body>
 <h1>Delete customer</h1>
 <p>
-    <a href="/customers">Back to customer list</a>
+    <a href="/notes">Back to note list</a>
 </p>
 <form method="post" >
     <h3>Are you sure?</h3>
     <fieldset>
-        <legend>Customer information</legend>
         <table>
             <tr>
                 <td>Name: </td>
                 <td>
-                    <input type="text" value="<c:out value="${customer.name}"/>"/>
+                    <input type="text" value="<c:out value="${note.noteName}"/>"/>
                 </td>
             </tr>
             <tr>
-                <td>Email: </td>
-                <td><input type="text" value="<c:out value="${customer.email}"/>"/></td>
+                <td>Start Time: </td>
+                <td><input type="text" value="<c:out value="${note.startTime}"/>"/></td>
             </tr>
             <tr>
-                <td>Phone: </td>
+                <td>End Time: </td>
                 <td>
-                    <input type="text" value="<c:out value="${customer.phone}"/>"/>
+                    <input type="text" value="<c:out value="${customer.endTime}"/>"/>
                 </td>
             </tr>
             <tr>
-                <td>Address: </td>
-                <td><input type="text" value="<c:out value="${customer.address}"/>"/></td>
+                <td>Type: </td>
+                <td><input type="number" value="<c:out value="${customer.typeId}"/>"/></td>
             </tr>
 
             <tr>
-                <td><input type="submit" value="Delete customer"></td>
+                <td>Priority: </td>
+                <td><input type="number" value="<c:out value="${customer.priorityId}"/>"/></td>
+            </tr>
+
+            <tr>
+                <td><input type="submit" value="Delete note"></td>
             </tr>
         </table>
     </fieldset>

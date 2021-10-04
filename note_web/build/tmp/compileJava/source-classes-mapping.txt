@@ -1,24 +1,26 @@
 controller/PriorityServlet.java
  controller.PriorityServlet
-controller/NoteServlet.java
- controller.NoteServlet
+model/Priority.java
+ model.Priority
 service/INoteService.java
  service.INoteService
-service/NoteService.java
- service.NoteService
+service/IPriorityService.java
+ service.IPriorityService
 service/INoteTypeSevice.java
  service.INoteTypeSevice
 model/NoteTypes.java
  model.NoteTypes
 model/Notes.java
  model.Notes
-model/Priority.java
- model.Priority
+controller/NoteTypeServlet.java
+ controller.NoteTypeServlet
 service/PriorityService.java
  service.PriorityService
 service/NoteTypeService.java
  service.NoteTypeService
-service/IPriorityService.java
- service.IPriorityService
-controller/NoteTypeServlet.java
- controller.NoteTypeServlet
+model/dto/NoteDTO.java
+ model.dto.NoteDTO
+service/NoteService.java
+ service.NoteService
+controller/NoteServlet.java
+ controller.NoteServlet

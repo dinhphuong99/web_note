@@ -1,8 +1,9 @@
 package controller;
 
+import model.NoteTypes;
 import model.Notes;
-import service.INoteService;
-import service.NoteService;
+import model.Priority;
+import service.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -11,13 +12,17 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "NoteServlet", value = "/notes")
+@WebServlet(name = "NoteServlet", urlPatterns = "/notes")
 public class NoteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private INoteService noteService;
+    private INoteTypeSevice noteTypeSevice;
+    private IPriorityService priorityService;
 
     public void init() {
         noteService = new NoteService();
+        noteTypeSevice = new NoteTypeService();
+        priorityService = new PriorityService();
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -103,6 +108,12 @@ public class NoteServlet extends HttpServlet {
     private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException{
         int id = Integer.parseInt(req.getParameter("id"));
         Notes existingCustomer = noteService.selectNote(id);
+        List<NoteTypes> noteTypesList = noteTypeSevice.selectAllNoteTypes();
+        req.setAttribute("noteTypesList", noteTypesList);
+
+        List<Priority> notePriority = priorityService.selectAllPriority();
+        req.setAttribute("priorityList", notePriority);
+
         if (existingCustomer != null) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("note/edit.jsp");
             req.setAttribute("note", existingCustomer);
@@ -117,6 +128,11 @@ public class NoteServlet extends HttpServlet {
 
     private void showNewForm(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException{
         RequestDispatcher dispatcher = req.getRequestDispatcher("note/create.jsp");
+        List<NoteTypes> noteTypesList = noteTypeSevice.selectAllNoteTypes();
+        req.setAttribute("noteTypesList", noteTypesList);
+
+        List<Priority> notePriority = priorityService.selectAllPriority();
+        req.setAttribute("priorityList", notePriority);
         dispatcher.forward(req, resp);
     }
 
@@ -124,13 +140,18 @@ public class NoteServlet extends HttpServlet {
     private void insertNote(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
         String name = req.getParameter("note_name");
         String startTime = req.getParameter("start_time");
-        String endTime = req.getParameter("end_Time");
+        String endTime = req.getParameter("end_time");
         String description = req.getParameter("description");
         int typeId = Integer.parseInt(req.getParameter("type_id"));
         int priorityId = Integer.parseInt(req.getParameter("priority_id"));
+        List<NoteTypes> noteTypesList = noteTypeSevice.selectAllNoteTypes();
+        req.setAttribute("noteTypesList", noteTypesList);
+
+        List<Priority> notePriority = priorityService.selectAllPriority();
+        req.setAttribute("priorityList", notePriority);
 
         if(name.equals("") || startTime.equals("") || endTime.equals("") || description.equals("") || String.valueOf(typeId).equals("")||String.valueOf(priorityId).equals("")){
-            RequestDispatcher dispatcher = req.getRequestDispatcher("customer/create.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("note/create.jsp");
             req.setAttribute("error","Invalid Value");
             req.setAttribute("success",null);
             dispatcher.forward(req,resp);
@@ -143,9 +164,10 @@ public class NoteServlet extends HttpServlet {
             newNote.setDescription(description);
             newNote.setTypeId(typeId);
             newNote.setPriorityId(priorityId);
+
             noteService.insertNote(newNote);
             req.setAttribute("error",null);
-            req.setAttribute("success","Create Customer successfully");
+            req.setAttribute("success","Create Note successfully");
             showNewForm(req, resp);
         }
     }
@@ -159,14 +181,20 @@ public class NoteServlet extends HttpServlet {
         int typeId = Integer.parseInt(req.getParameter("type_id"));
         int priorityId = Integer.parseInt(req.getParameter("priority_id"));
         Notes note = new Notes(id, name, startTime, endTime, description,typeId,priorityId);
+        List<NoteTypes> noteTypesList = noteTypeSevice.selectAllNoteTypes();
+        req.setAttribute("noteTypesList", noteTypesList);
+
+        List<Priority> notePriority = priorityService.selectAllPriority();
+        req.setAttribute("notePriority", notePriority);
+
         boolean isDeposit = noteService.updateNote(note);
 
         if (isDeposit) {
-            req.setAttribute("success","Successful deposit");
+            req.setAttribute("success","Successful");
             req.setAttribute("error",null);
         } else {
             req.setAttribute("success",null);
-            req.setAttribute("error","Error deposit");
+            req.setAttribute("error","Error");
         }
         showEditForm(req, resp);
     }

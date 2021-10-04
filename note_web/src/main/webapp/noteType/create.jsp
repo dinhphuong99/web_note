@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Create new customer</title>
+    <title>Create new note type</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 </head>
 <body>
@@ -11,9 +11,8 @@
         <div class="row">
             <div class="row">
                 <div class="col-sm-6">
-                    <h1>Create customer</h1>
                     <h3>
-                        <a href="/customers"> Black list Customer</a>
+                        <a href="/noteTypes"> Black list Note Type</a>
                     </h3>
                 </div>
             </div>
@@ -25,22 +24,10 @@
                 <label class="form-label">Name</label>
                 <input type="text" class="form-control" name="name">
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Email</label>
-                <input type="text" class="form-control" name="email">
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Phone</label>
-                <input type="tel" class="form-control" name="phone">
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Address</label>
-                <input type="text" class="form-control" name="address">
-            </div>
             <div class="col-md-12">
-                <button type="submit" id="btnCreateCustomer" class="btn btn-outline-primary">
+                <button type="submit" id="btnCreateNoteType" class="btn btn-outline-primary">
                     <i class="fa fa-plus" aria-hidden="true"></i>
-                    Create customer
+                    Create
                 </button>
             </div>
         </fieldset>
