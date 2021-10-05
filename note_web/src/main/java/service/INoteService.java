@@ -1,5 +1,6 @@
 package service;
 
+import model.NoteCt;
 import model.NoteTypes;
 import model.Notes;
 
@@ -12,7 +13,7 @@ public interface INoteService {
 
     public Notes selectNote(int id) throws SQLException;
 
-    public List<Notes>selectAllNotes() throws SQLException;
+    public List<NoteCt>selectAllNotes() throws SQLException;
 
     public boolean deleteNote(int id) throws SQLException;
 

@@ -37,6 +37,9 @@ public class NoteTypeServlet extends HttpServlet {
                 case "delete" :
                     deleteNoteType(req,resp);
                     break;
+                default:
+                    listNoteTypes(req, resp);
+                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);

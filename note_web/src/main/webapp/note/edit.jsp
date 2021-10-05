@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <title>Edit customer</title>
+    <title>Edit note</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -22,10 +22,11 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/resource/js/jquery.validate.min.js"></script>
 </head>
-<title>Edit note</title>
+<title>Title</title>
 </head>
 <body class="container">
 <div align="center">
+    <caption><h2>Edit note</h2></caption>
     <p>
         <a href="/notes">Back to note list</a>
     </p>
@@ -33,45 +34,70 @@
         <div class="row">
             <div class="col-6">
                 <label>Note Name: </label>
-                <input type="text" name="note_name" size="45" class="form-control"
+                <input type="text" name="note_name" id="note_name" size="45" class="form-control"
                        value="<c:out value='${note.getNoteName()}'/>">
             </div>
             <div class="col-md-6">
-                <label>Start Time:</label>
-                <input type="text" name="email" id="start_time" size="45" class="form-control"
+                <label>Start time:</label>
+                <input type="text" name="start_time" id="start_time" size="45" class="form-control"
                        value="<c:out value='${note.getStartTime()}'/>">
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <label>End Time:</label>
-                <input type="text" name="email" id="end_time" size="45" class="form-control"
+                <label>End time:</label>
+                <input type="text" name="end_time" id="end_time" size="45" class="form-control"
                        value="<c:out value='${note.getEndTime()}'/>">
             </div>
             <div class="col-md-6">
                 <label>Description:</label>
-                <input type="text" name="address" id="address" size="45" class="form-control"
+                <input type="text" name="description" id="description" size="45" class="form-control"
                        value="<c:out value='${note.getDescription()}'/>">
             </div>
+
+<%--            <div class="col-md-6">--%>
+<%--                <label>Type id:</label>--%>
+<%--                <input type="text" name="type_id1" id="type_id1" size="45" class="form-control"--%>
+<%--                       value="<c:out value='${note.getTypeId()}'/>">--%>
+<%--            </div>--%>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <label>Type:</label>
                 <select name="type_id" id="type_id">
                     <c:forEach items="${noteTypesList}" var="item">
-                        <option value="${item.id}">${item.name}</option>
+                        <c:if test="${item.id == note.getTypeId()}">
+                            <option value="${item.id}">
+                                    ${item.name}</option>
+                        </c:if>
+                    </c:forEach>
+
+                    <c:forEach items="${noteTypesList}" var="item">
+                        <option value="${item.id}">
+                                ${item.name}</option>
                     </c:forEach>
                 </select>
-
+            </div>
+            <div class="col-md-6">
                 <label>Priority:</label>
                 <select name="priority_id" id="priority_id">
-                    <c:forEach items="${notePriority}" var="item1">
-                        <option value="${item1.id}">${item1.priorityName}</option>
+                    <c:forEach items="${priorityList}" var="item1">
+                        <c:if test="${item1.id == note.getPriorityId()}">
+                            <option value="${item1.id}">
+                                    ${item1.priorityName}</option>
+                        </c:if>
+                    </c:forEach>
+
+                    <c:forEach items="${priorityList}" var="item1">
+                        <option value="${item1.id}">
+                                ${item1.priorityName}</option>
                     </c:forEach>
                 </select>
             </div>
         </div>
         <br>
         <div class="form-group">
-            <button type="submit" class="btn btn-warning">Update</button>
+            <input type="submit" name="action" class="btn btn-warning" value="Edit"></input>
         </div>
     </form>
 </div>

@@ -22,7 +22,7 @@
             </tr>
 
             <tr>
-                <td><input type="submit" value="Delete"></td>
+                <td><input type="submit" name = "action" value="Delete"></td>
             </tr>
         </table>
     </fieldset>

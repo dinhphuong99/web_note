@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Create new note type</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dashboard/assets/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
@@ -27,7 +27,7 @@
             <div class="col-md-12">
                 <button type="submit" id="btnCreateNoteType" class="btn btn-outline-primary">
                     <i class="fa fa-plus" aria-hidden="true"></i>
-                    Create
+                    Create new type
                 </button>
             </div>
         </fieldset>

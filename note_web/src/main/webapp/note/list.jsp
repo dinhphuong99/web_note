@@ -154,11 +154,11 @@
                             <li class="parent"><a href="#"><i
                                     class="icon mdi mdi-border-all"></i><span>Tables</span></a>
                                 <ul class="sub-menu">
-                                    <li><a href="../noteType/list.jsp">Type</a>
+                                    <li><a href="/noteTypes?action=">Type</a>
                                     </li>
-                                    <li class="active"><a href="../note/list.jsp">Note</a>
+                                    <li class="active"><a href="/notes?action=">Note</a>
                                     </li>
-                                    <li><a href="../priority/list.jsp">Priority</a>
+                                    <li><a href="/prioritys?action=">Priority</a>
                                     </li>
                                 </ul>
                             </li>
@@ -191,8 +191,8 @@
                                     <th>Start Time</th>
                                     <th>EndTime</th>
                                     <th>Description</th>
-                                    <th>TypeId</th>
-                                    <th>PriorityId</th>
+                                    <th>Type</th>
+                                    <th>Priority</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -215,9 +215,9 @@
                                         <td><c:out value="${note.startTime}"/></td>
                                         <td><c:out value="${note.endTime}"/></td>
                                         <td><c:out value="${note.description}"/></td>
-                                        <td><c:out value="${note.typeId}"/></td>
+                                        <td><c:out value="${note.type}"/></td>
                                         <td class="center">
-                                            <c:out value="${note.priorityId}"/>
+                                            <c:out value="${note.priority}"/>
                                         </td>
 
                                         <td class="center">

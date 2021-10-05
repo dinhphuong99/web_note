@@ -154,11 +154,11 @@
                             <li class="parent"><a href="#"><i
                                     class="icon mdi mdi-border-all"></i><span>Tables</span></a>
                                 <ul class="sub-menu">
-                                    <li><a href="../noteType/list.jsp">Type</a>
+                                    <li><a href="/noteTypes?action=">Type</a>
                                     </li>
-                                    <li class="active"><a href="../note/list.jsp">Note</a>
+                                    <li class="active"><a href="/notes?action=">Note</a>
                                     </li>
-                                    <li><a href="../priority/list.jsp">Priority</a>
+                                    <li><a href="/priority/list.jsp">Priority</a>
                                     </li>
                                 </ul>
                             </li>
@@ -192,15 +192,15 @@
                                 </thead>
                                 <tbody>
                                 <tr class="odd gradeX" style="display: none">
-                                    <td ></td>
-                                    <td></td>
-                                    <td ></td>
-                                    <td></td>
+                                    <td >f</td>
+                                    <td>f</td>
+                                    <td >f</td>
+                                    <td>f</td>
                                 </tr>
                                 <c:forEach var="noteType" items="${listNoteType}">
                                     <tr class="odd gradeX">
                                         <td style="display: none!important;"><c:out value="${noteType.id}"/></td>
-                                        <td><c:out value="${noteType.noteName}"/></td>
+                                        <td><c:out value="${noteType.name}"/></td>
 
                                         <td>
                                             <a href="/notes?action=edit&id=${noteType.id}">Edit</a>

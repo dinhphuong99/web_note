@@ -1,5 +1,6 @@
 package controller;
 
+import model.NoteCt;
 import model.NoteTypes;
 import model.Notes;
 import model.Priority;
@@ -42,6 +43,9 @@ public class NoteServlet extends HttpServlet {
                 case "delete" :
                     deleteNote(req,resp);
                     break;
+                default:
+                    listNote(req, resp);
+                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
@@ -77,7 +81,7 @@ public class NoteServlet extends HttpServlet {
     }
 
     private void listNote(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
-        List<Notes> listNote = noteService.selectAllNotes();
+        List<NoteCt> listNote = noteService.selectAllNotes();
         req.setAttribute("listNote", listNote);
         RequestDispatcher dispatcher = req.getRequestDispatcher("note/list.jsp");
         dispatcher.forward(req, resp);
@@ -98,11 +102,12 @@ public class NoteServlet extends HttpServlet {
         if (isDeposit) {
             req.setAttribute("success","Successful delete");
             req.setAttribute("error",null);
+            resp.sendRedirect("/notes");
         } else {
             req.setAttribute("success",null);
             req.setAttribute("error","Error delete");
+            resp.sendRedirect("/notes");
         }
-        resp.sendRedirect("/notes");
     }
 
     private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException{
@@ -123,7 +128,6 @@ public class NoteServlet extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("note/404.jsp");
             dispatcher.forward(req, resp);
         }
-
     }
 
     private void showNewForm(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException{
@@ -176,7 +180,7 @@ public class NoteServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         String name = req.getParameter("note_name");
         String startTime = req.getParameter("start_time");
-        String endTime = req.getParameter("end_Time");
+        String endTime = req.getParameter("end_time");
         String description = req.getParameter("description");
         int typeId = Integer.parseInt(req.getParameter("type_id"));
         int priorityId = Integer.parseInt(req.getParameter("priority_id"));
@@ -192,10 +196,11 @@ public class NoteServlet extends HttpServlet {
         if (isDeposit) {
             req.setAttribute("success","Successful");
             req.setAttribute("error",null);
+            listNote(req,resp);
         } else {
             req.setAttribute("success",null);
             req.setAttribute("error","Error");
+            showEditForm(req, resp);
         }
-        showEditForm(req, resp);
     }
 }

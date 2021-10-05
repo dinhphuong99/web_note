@@ -1,5 +1,6 @@
 package service;
 
+import model.NoteCt;
 import model.NoteTypes;
 import model.Notes;
 
@@ -75,9 +76,12 @@ public class NoteService implements INoteService {
     }
 
 
-    public List<Notes> selectAllNotes() throws SQLException {
-        List<Notes> notes = new ArrayList<>();
-        try (Connection connection = connection(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_NOTE_SQL);) {
+    public List<NoteCt> selectAllNotes() throws SQLException {
+        List<NoteCt> notes = new ArrayList<>();
+        String ALL_NOTE = "select n.id, n.note_name,n.start_time,n.end_time,n.description,t.name, p.priority_name from notes n join note_types t on n.type_id = t.id join priority p on n.priority_id = p.id;";
+        try{
+            Connection connection = connection();
+            PreparedStatement preparedStatement = connection.prepareStatement(ALL_NOTE);
             System.out.println(preparedStatement);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -87,10 +91,10 @@ public class NoteService implements INoteService {
                 String startTime = resultSet.getString("start_time");
                 String endTime = resultSet.getString("end_time");
                 String description = resultSet.getString("description");
-                int typeId = resultSet.getInt("type_id");
-                int priorityId = resultSet.getInt("priority_id");
+                String type = resultSet.getString("name");
+                String priority = resultSet.getString("priority_name");
 
-                notes.add(new Notes(id, noteName, startTime, endTime, description, typeId, priorityId));
+                notes.add(new NoteCt(id, noteName, startTime, endTime, description, type, priority));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -100,18 +104,25 @@ public class NoteService implements INoteService {
 
 
     public boolean deleteNote(int id) throws SQLException {
-        boolean rowDelete;
-        try (Connection connection = connection(); PreparedStatement statement = connection.prepareStatement(DELETE_NOTE_SQL)) {
+        boolean rowDelete = false;
+        try{
+            Connection connection = connection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_NOTE_SQL);
             statement.setInt(1, id);
             rowDelete = statement.executeUpdate() > 0;
+            return rowDelete;
+        }catch (Exception e){
+            e.printStackTrace();
+            return rowDelete;
         }
-        return rowDelete;
     }
 
 
     public boolean updateNote(Notes note) throws SQLException {
-        boolean rowUpdate;
-        try (Connection connection = connection(); PreparedStatement statement = connection.prepareStatement(UPDATE_NOTE_SQL)) {
+        boolean rowUpdate = false;
+        try {
+            Connection connection = connection();
+            PreparedStatement statement = connection.prepareStatement(UPDATE_NOTE_SQL);
             statement.setString(1, note.getNoteName());
             statement.setString(2, note.getStartTime());
             statement.setString(3, note.getEndTime());
@@ -121,8 +132,11 @@ public class NoteService implements INoteService {
             statement.setInt(7,note.getId());
 
             rowUpdate = statement.executeUpdate() > 0;
+            return rowUpdate;
+        }catch (Exception e){
+            e.printStackTrace();
+            return rowUpdate;
         }
-        return rowUpdate;
     }
 
     private void printSQLException(SQLException ex) {

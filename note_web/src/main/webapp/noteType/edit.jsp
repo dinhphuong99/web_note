@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-warning">Update</button>
+            <button type="submit" name = "action" class="btn btn-warning">Update</button>
         </div>
     </form>
 </div>
