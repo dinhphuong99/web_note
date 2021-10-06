@@ -36,11 +36,21 @@
             <div class="row" style="height: 50px">
                 <span class="col-md-6">
                     <label>Type:</label>
-                    <input type="text" name="type_id" id="type_id" size="5" class="form-control" value="<c:out value='${note.getTypeId()}'/>">
+                    <c:forEach items="${noteTypesList}" var="item">
+                        <c:if test="${item.id == note.getTypeId()}">
+                            <span value="${item.id}">
+                                    ${item.name}</span>
+                        </c:if>
+                    </c:forEach>
                 </span>
                 <span class="col-md-6" style="margin-left: 55px">
                     <label>Priority:</label>
-                    <input type="text" name="priority_id" id="priority_id" size="5" class="form-control" value="<c:out value='${note.getPriorityId()}'/>">
+                    <c:forEach items="${priorityList}" var="item1">
+                        <c:if test="${item1.id == note.getPriorityId()}">
+                            <span value="${item1.id}">
+                                    ${item1.priorityName}</span>
+                        </c:if>
+                    </c:forEach>
                 </span>
             </div>
             <br>

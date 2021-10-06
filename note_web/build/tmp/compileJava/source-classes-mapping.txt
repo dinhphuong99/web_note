@@ -20,7 +20,7 @@ service/NoteTypeService.java
  service.NoteTypeService
 service/INoteService.java
  service.INoteService
-controller/NoteServlet.java
- controller.NoteServlet
 service/NoteService.java
  service.NoteService
+controller/NoteServlet.java
+ controller.NoteServlet

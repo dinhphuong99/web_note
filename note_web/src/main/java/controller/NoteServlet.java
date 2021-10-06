@@ -91,6 +91,11 @@ public class NoteServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         request.setAttribute("note",noteService.selectNote(id));
         RequestDispatcher dis = request.getRequestDispatcher("note/delete.jsp");
+        List<NoteTypes> noteTypesList = noteTypeSevice.selectAllNoteTypes();
+        request.setAttribute("noteTypesList", noteTypesList);
+
+        List<Priority> notePriority = priorityService.selectAllPriority();
+        request.setAttribute("priorityList", notePriority);
         dis.forward(request,response);
     }
 
@@ -98,6 +103,11 @@ public class NoteServlet extends HttpServlet {
         int id =Integer.parseInt(req.getParameter("id"));
         noteService.deleteNote(id);
         boolean isDeposit = noteService.deleteNote(id);
+        List<NoteTypes> noteTypesList = noteTypeSevice.selectAllNoteTypes();
+        req.setAttribute("noteTypesList", noteTypesList);
+
+        List<Priority> notePriority = priorityService.selectAllPriority();
+        req.setAttribute("priorityList", notePriority);
 
         if (isDeposit) {
             req.setAttribute("success","Successful delete");
